@@ -10,7 +10,6 @@ namespace XamRayTracing
 {
     public class OverheadRoom : SKCanvasView
     {
-        private LightSource __LightSource;
         private readonly Random __Random = new Random();
         internal static SKPaint __RedPaint = new SKPaint
         {
@@ -27,9 +26,16 @@ namespace XamRayTracing
             StrokeWidth = 2
         };
 
+        public LightSource LightSource { get; set; }
+
+        public OverheadRoom()
+        {
+            LightSource = new LightSource(CanvasSize.Width, CanvasSize.Height, 60);
+        }
+
         internal void BeginTranslation()
         {
-            __StartingPoint = __LightSource.Position;
+            __StartingPoint = LightSource.Position;
         }
 
         internal void ChangeBoundaries()
@@ -58,9 +64,8 @@ namespace XamRayTracing
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
         {
             base.OnPaintSurface(e);
-            if (__LightSource == null || __Walls == null)
+            if (__Walls == null)
             {
-                __LightSource = new LightSource(CanvasSize.Width, CanvasSize.Height, 180);
                 GenerateBoundaries();
             }
             SKCanvas _Canvas = e.Surface.Canvas;
@@ -70,13 +75,13 @@ namespace XamRayTracing
                 _Canvas.DrawLine(_Wall.Origin.X, _Wall.Origin.Y, _Wall.End.X, _Wall.End.Y, __WhitePaint);
             }
 
-            __LightSource.Look(__Walls, _Canvas);
-            _Canvas.DrawCircle(__LightSource.Position.X, __LightSource.Position.Y, 10, __RedPaint);
+            LightSource.Look(__Walls, _Canvas);
+            _Canvas.DrawCircle(LightSource.Position.X, LightSource.Position.Y, 10, __RedPaint);
         }
 
         internal void TranslateLightSource(double totalX, double totalY)
         {
-            __LightSource.Position = Vector2.Add(__StartingPoint, new Vector2((float)(CanvasSize.Width * totalX / Width), (float)(CanvasSize.Height * totalY / Height)));
+            LightSource.Position = Vector2.Add(__StartingPoint, new Vector2((float)(CanvasSize.Width * totalX / Width), (float)(CanvasSize.Height * totalY / Height)));
             InvalidateSurface();
         }
     }

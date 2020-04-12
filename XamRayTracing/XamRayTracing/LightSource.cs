@@ -7,15 +7,10 @@ namespace XamRayTracing
 {
     public class LightSource
     {
-        public LightSource(float sceneWidth, float sceneHeight, int numberOfRays)
+        public LightSource(float sceneWidth, float sceneHeight, double fov)
         {
             Position = new Vector2(sceneWidth / 2, sceneHeight / 2);
-            float _Angle = 0;
-            Rays = new List<Ray>(Enumerable.Range(0, numberOfRays).Select(index =>
-            {
-                _Angle += 360f / numberOfRays;
-                return new Ray(Position, _Angle);
-            }));
+            SetRays(fov);
         }
 
         internal void Look(List<Boundary> walls, SKCanvas canvas)
@@ -47,7 +42,18 @@ namespace XamRayTracing
             }
         }
 
+        internal void SetRays(double fov)
+        {
+            List<Ray> _Rays = new List<Ray>();
+            for (int i = 0; i < fov; i++)
+            {
+                _Rays.Add(new Ray(Position, i));
+            }
+
+            Rays = _Rays;
+        }
+
         public Vector2 Position { get; set; }
-        public List<Ray> Rays { get; set; }
+        public List<Ray> Rays { get; private set; }
     }
 }

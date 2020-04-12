@@ -16,6 +16,25 @@ namespace XamRayTracing
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = this;
+            FOV = 60;
+        }
+
+
+        private double fov;
+        public double FOV
+        {
+            get => fov;
+            set
+            {
+                if (fov != value)
+                {
+                    fov = value;
+                    ovhRoom.LightSource.SetRays(fov);
+                    ovhRoom.InvalidateSurface();
+                    OnPropertyChanged();
+                }
+            }
         }
 
         private void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)

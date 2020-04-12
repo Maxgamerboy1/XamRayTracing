@@ -11,7 +11,11 @@
              BackgroundColor="Black">
 
     <StackLayout Spacing="0">
-        <xamraytracing:OverheadRoom VerticalOptions="FillAndExpand">
+        <StackLayout Orientation="Horizontal">
+            <Label TextColor="White" VerticalOptions="Center" Text="{Binding FOV, StringFormat='FOV: {0}'}"/>
+            <Slider Minimum="0" Maximum="360" HorizontalOptions="FillAndExpand" Value="{Binding FOV}"/>
+        </StackLayout>
+        <xamraytracing:OverheadRoom x:Name="ovhRoom" VerticalOptions="FillAndExpand">
             <xamraytracing:OverheadRoom.GestureRecognizers>
                 <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
                 <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped"/>
