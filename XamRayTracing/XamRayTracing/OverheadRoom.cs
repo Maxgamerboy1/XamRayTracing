@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace XamRayTracing
 {
-    public class Room : SKCanvasView
+    public class OverheadRoom : SKCanvasView
     {
         private LightSource __LightSource;
         private readonly Random __Random = new Random();

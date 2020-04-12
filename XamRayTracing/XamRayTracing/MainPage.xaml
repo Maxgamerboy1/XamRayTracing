@@ -11,11 +11,11 @@
              BackgroundColor="Black">
 
     <StackLayout Spacing="0">
-        <xamraytracing:Room VerticalOptions="FillAndExpand">
-            <xamraytracing:Room.GestureRecognizers>
+        <xamraytracing:OverheadRoom VerticalOptions="FillAndExpand">
+            <xamraytracing:OverheadRoom.GestureRecognizers>
                 <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
                 <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped"/>
-            </xamraytracing:Room.GestureRecognizers>
-        </xamraytracing:Room>
+            </xamraytracing:OverheadRoom.GestureRecognizers>
+        </xamraytracing:OverheadRoom>
     </StackLayout>
 </ContentPage>

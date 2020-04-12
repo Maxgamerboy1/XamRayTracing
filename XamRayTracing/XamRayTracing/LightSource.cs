@@ -42,7 +42,7 @@ namespace XamRayTracing
                 {
                     SKPoint _Start = new SKPoint(Position.X, Position.Y);
                     SKPoint _End = new SKPoint(_Closest.X, _Closest.Y);
-                    canvas.DrawLine(_Start, _End, Room.__WhitePaint);
+                    canvas.DrawLine(_Start, _End, OverheadRoom.__WhitePaint);
                 }
             }
         }

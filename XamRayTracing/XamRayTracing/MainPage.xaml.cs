@@ -20,7 +20,7 @@ namespace XamRayTracing
 
         private void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
-            if (sender is Room _Room)
+            if (sender is OverheadRoom _Room)
             {
                 switch (e.StatusType)
                 {
@@ -41,7 +41,7 @@ namespace XamRayTracing
 
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            if (sender is Room _Room)
+            if (sender is OverheadRoom _Room)
             {
                 _Room.ChangeBoundaries();
             }
