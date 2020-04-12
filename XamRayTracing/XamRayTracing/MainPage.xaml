@@ -17,11 +17,5 @@
                 <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped"/>
             </xamraytracing:Room.GestureRecognizers>
         </xamraytracing:Room>
-        <xamraytracing:Room VerticalOptions="FillAndExpand">
-            <xamraytracing:Room.GestureRecognizers>
-                <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
-                <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped"/>
-            </xamraytracing:Room.GestureRecognizers>
-        </xamraytracing:Room>
     </StackLayout>
 </ContentPage>

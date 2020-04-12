@@ -77,7 +77,6 @@ namespace XamRayTracing
         internal void TranslateLightSource(double totalX, double totalY)
         {
             __LightSource.Position = Vector2.Add(__StartingPoint, new Vector2((float)(CanvasSize.Width * totalX / Width), (float)(CanvasSize.Height * totalY / Height)));
-            //__LightSource.Position = Vector2.Add(__StartingPoint, new Vector2((float)totalX, (float)totalY));
             InvalidateSurface();
         }
     }
