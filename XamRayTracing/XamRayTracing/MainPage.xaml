@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:xamraytracing="clr-namespace:XamRayTracing"
              mc:Ignorable="d"
              x:Class="XamRayTracing.MainPage"
@@ -11,15 +11,23 @@
              BackgroundColor="Black">
 
     <StackLayout Spacing="0">
-        <StackLayout Orientation="Horizontal">
-            <Label TextColor="White" VerticalOptions="Center" Text="{Binding FOV, StringFormat='FOV: {0}'}"/>
-            <Slider Minimum="0" Maximum="360" HorizontalOptions="FillAndExpand" Value="{Binding FOV}"/>
-        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" TextColor="White" VerticalOptions="Center" Text="{Binding FOV, StringFormat='FOV: {0}'}"/>
+            <Slider Grid.Row="0" Grid.Column="1" Minimum="0" Maximum="360" HorizontalOptions="FillAndExpand" Value="{Binding FOV}"/>
+
+            <Label Grid.Row="1" Grid.Column="0" TextColor="White" VerticalOptions="Center" Text="{Binding Heading, StringFormat='Heading: {0}'}"/>
+            <Slider Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="360" HorizontalOptions="FillAndExpand" Value="{Binding Heading}"/>
+        </Grid>
         <xamraytracing:OverheadRoom x:Name="ovhRoom" VerticalOptions="FillAndExpand">
             <xamraytracing:OverheadRoom.GestureRecognizers>
                 <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
                 <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped"/>
             </xamraytracing:OverheadRoom.GestureRecognizers>
         </xamraytracing:OverheadRoom>
+        <xamraytracing:FPSView x:Name="fpsView" VerticalOptions="FillAndExpand"/>
     </StackLayout>
 </ContentPage>

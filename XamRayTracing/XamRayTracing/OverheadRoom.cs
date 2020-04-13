@@ -26,16 +26,17 @@ namespace XamRayTracing
             StrokeWidth = 2
         };
 
-        public LightSource LightSource { get; set; }
+        public LightSource LightSource { get; }
+        public FPSView FPSView { get; set; }
 
         public OverheadRoom()
         {
-            LightSource = new LightSource(CanvasSize.Width, CanvasSize.Height, 60);
+            LightSource = new LightSource(0);
         }
 
         internal void BeginTranslation()
         {
-            __StartingPoint = LightSource.Position;
+            __StartingPoint = LightSource.Location;
         }
 
         internal void ChangeBoundaries()
@@ -72,16 +73,17 @@ namespace XamRayTracing
             _Canvas.Clear();
             foreach (Boundary _Wall in __Walls)
             {
-                _Canvas.DrawLine(_Wall.Origin.X, _Wall.Origin.Y, _Wall.End.X, _Wall.End.Y, __WhitePaint);
+                _Canvas.DrawLine(_Wall.Origin.X, _Wall.Origin.Y, _Wall.End.X, _Wall.End.Y, Boundary.__BoundaryPaint);
             }
 
-            LightSource.Look(__Walls, _Canvas);
-            _Canvas.DrawCircle(LightSource.Position.X, LightSource.Position.Y, 10, __RedPaint);
+            List<float> _WallDistances = LightSource.Look(__Walls, _Canvas);
+            FPSView?.Update(_WallDistances);
+            _Canvas.DrawCircle(LightSource.Location.X, LightSource.Location.Y, 8, __RedPaint);
         }
 
         internal void TranslateLightSource(double totalX, double totalY)
         {
-            LightSource.Position = Vector2.Add(__StartingPoint, new Vector2((float)(CanvasSize.Width * totalX / Width), (float)(CanvasSize.Height * totalY / Height)));
+            LightSource.Location = Vector2.Add(__StartingPoint, new Vector2((float)(CanvasSize.Width * totalX / Width), (float)(CanvasSize.Height * totalY / Height)));
             InvalidateSurface();
         }
     }

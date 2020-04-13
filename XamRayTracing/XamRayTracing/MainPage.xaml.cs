@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace XamRayTracing
@@ -17,20 +13,38 @@ namespace XamRayTracing
         {
             InitializeComponent();
             BindingContext = this;
-            FOV = 60;
+            ovhRoom.FPSView = fpsView;
         }
 
 
-        private double fov;
+        private double fov = 60;
         public double FOV
         {
             get => fov;
             set
             {
+                value = Math.Ceiling(value);
                 if (fov != value)
                 {
                     fov = value;
                     ovhRoom.LightSource.SetRays(fov);
+                    ovhRoom.InvalidateSurface();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
+        private double __Heading;
+        public double Heading
+        {
+            get => __Heading;
+            set
+            {
+                if (__Heading != value)
+                {
+                    __Heading = value;
+                    ovhRoom.LightSource.SetDirection(__Heading);
                     ovhRoom.InvalidateSurface();
                     OnPropertyChanged();
                 }
