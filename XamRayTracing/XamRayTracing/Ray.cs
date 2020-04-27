@@ -14,7 +14,7 @@ namespace XamRayTracing
             __InitialHeading = initialHeading;
         }
 
-        internal Vector2 Cast(Boundary wall, Vector2 playerHeading)
+        internal Vector2 Cast(Boundary wall)
         {
             float _WallX_Start = wall.Origin.X;
             float _WallY_Start = wall.Origin.Y;

@@ -23,7 +23,7 @@ namespace XamRayTracing
                 foreach (Boundary _Wall in walls)
                 {
                     _Ray.Location = Location;
-                    Vector2 _HitPoint = _Ray.Cast(_Wall, Vector2.Add(Location, Heading));
+                    Vector2 _HitPoint = _Ray.Cast(_Wall);
                     if (_HitPoint != Vector2.Zero)
                     {
                         float _Distance = Vector2.Distance(Location, _HitPoint);
@@ -52,7 +52,7 @@ namespace XamRayTracing
             int index = 0;
             for (double step = 0; step < fov; step+= 1)
             {
-                _Rays.Add(new Ray(Heading, index));
+                _Rays.Add(new Ray(Location, index));
                 index++;
             }
 
