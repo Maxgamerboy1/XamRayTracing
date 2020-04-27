@@ -8,7 +8,7 @@ namespace XamRayTracing
     {
         public LightSource(double fov)
         {
-            Location = new Vector2(0,0);
+            Location = Vector2.Zero;
             Heading = Vector2.Zero;
             SetRays(fov);
         }

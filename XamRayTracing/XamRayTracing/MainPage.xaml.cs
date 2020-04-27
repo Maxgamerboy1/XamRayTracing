@@ -17,7 +17,7 @@ namespace XamRayTracing
         }
 
 
-        private double fov = 60;
+        private double fov = 1;
         public double FOV
         {
             get => fov;

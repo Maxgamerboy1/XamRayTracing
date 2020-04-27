@@ -78,12 +78,13 @@ namespace XamRayTracing
 
             List<float> _WallDistances = LightSource.Look(__Walls, _Canvas);
             FPSView?.Update(_WallDistances);
-            _Canvas.DrawCircle(LightSource.Location.X, LightSource.Location.Y, 8, __RedPaint);
+            _Canvas.DrawCircle(LightSource.Location.X, LightSource.Location.Y, 6, __RedPaint);
         }
 
         internal void TranslateLightSource(double totalX, double totalY)
         {
-            LightSource.Location = Vector2.Add(__StartingPoint, new Vector2((float)(CanvasSize.Width * totalX / Width), (float)(CanvasSize.Height * totalY / Height)));
+            //LightSource.Location = Vector2.Add(__StartingPoint, new Vector2((float)(CanvasSize.Width * totalX / Width), (float)(CanvasSize.Height * totalY / Height)));
+            LightSource.Location = Vector2.Add(__StartingPoint, new Vector2((float)totalX, (float)totalY));
             InvalidateSurface();
         }
     }
