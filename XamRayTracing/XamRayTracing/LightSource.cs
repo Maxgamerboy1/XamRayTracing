@@ -1,17 +1,15 @@
 ﻿using SkiaSharp;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 
 namespace XamRayTracing
 {
     public class LightSource
     {
-        private double __Heading;
         public LightSource(double fov)
         {
             Location = new Vector2(0,0);
+            Heading = Vector2.Zero;
             SetRays(fov);
         }
 
@@ -25,7 +23,7 @@ namespace XamRayTracing
                 foreach (Boundary _Wall in walls)
                 {
                     _Ray.Location = Location;
-                    Vector2 _HitPoint = _Ray.Cast(_Wall);
+                    Vector2 _HitPoint = _Ray.Cast(_Wall, Vector2.Add(Location, Heading));
                     if (_HitPoint != Vector2.Zero)
                     {
                         float _Distance = Vector2.Distance(Location, _HitPoint);
@@ -54,23 +52,24 @@ namespace XamRayTracing
             int index = 0;
             for (double step = 0; step < fov; step+= 1)
             {
-                _Rays.Add(new Ray(Location, index + __Heading, index));
+                _Rays.Add(new Ray(Heading, index));
                 index++;
             }
 
             Rays = _Rays;
         }
 
-        internal void SetDirection(double heading)
+        internal void SetHeading(double heading)
         {
-            __Heading = heading;
+            Heading = VecUtils.RotateByDegrees(Location, heading);
             foreach (Ray ray in Rays)
             {
-                ray.SetDirection(ray.Index + __Heading);
+                ray.SetHeading(heading);
             }
         }
 
         public Vector2 Location { get; set; }
+        public Vector2 Heading { get; private set; }
         public List<Ray> Rays { get; private set; }
     }
 }

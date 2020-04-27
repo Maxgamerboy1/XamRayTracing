@@ -44,7 +44,7 @@ namespace XamRayTracing
                 if (__Heading != value)
                 {
                     __Heading = value;
-                    ovhRoom.LightSource.SetDirection(__Heading);
+                    ovhRoom.LightSource.SetHeading(__Heading);
                     ovhRoom.InvalidateSurface();
                     OnPropertyChanged();
                 }

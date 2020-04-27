@@ -5,37 +5,40 @@ namespace XamRayTracing
 {
     public class Ray
     {
-        public Ray(Vector2 location, double heading, int index)
+        private readonly int __InitialHeading;
+
+        public Ray(Vector2 location, int initialHeading)
         {
             Location = location;
-            SetDirection(heading);
-            Index = index;
+            Direction = VecUtils.RotateByDegrees(Location, initialHeading);
+            __InitialHeading = initialHeading;
         }
 
-        internal Vector2 Cast(Boundary wall)
+        internal Vector2 Cast(Boundary wall, Vector2 playerHeading)
         {
-            float _X1 = wall.Origin.X;
-            float _Y1 = wall.Origin.Y;
-            float _X2 = wall.End.X;
-            float _Y2 = wall.End.Y;
-            float _X3 = Location.X;
-            float _Y3 = Location.Y;
+            float _WallX_Start = wall.Origin.X;
+            float _WallY_Start = wall.Origin.Y;
+            float _WallX_End = wall.End.X;
+            float _WallY_End = wall.End.Y;
+            float _RayX_Start = Location.X;
+            float _RayY_Start = Location.Y;
+
 
             Vector2 _Vec4 = Vector2.Add(Location, Direction);
-            float _X4 = _Vec4.X;
-            float _Y4 = _Vec4.Y;
+            float _RayX_End = _Vec4.X;
+            float _RayY_End = _Vec4.Y;
 
-            float _Den = (_X1 - _X2) * (_Y3 - _Y4) - (_Y1 - _Y2) * (_X3 - _X4);
+            float _Den = (_WallX_Start - _WallX_End) * (_RayY_Start - _RayY_End) - (_WallY_Start - _WallY_End) * (_RayX_Start - _RayX_End);
             if (_Den == 0F)
             {
                 return Vector2.Zero;
             }
 
-            float _T = ((_X1 - _X3) * (_Y3 - _Y4) - (_Y1 - _Y3) * (_X3 - _X4)) / _Den;
-            float _U = -((_X1 - _X2) * (_Y1 - _Y3) - (_Y1 - _Y2) * (_X1 - _X3)) / _Den;
+            float _T = ((_WallX_Start - _RayX_Start) * (_RayY_Start - _RayY_End) - (_WallY_Start - _RayY_Start) * (_RayX_Start - _RayX_End)) / _Den;
+            float _U = -((_WallX_Start - _WallX_End) * (_WallY_Start - _RayY_Start) - (_WallY_Start - _WallY_End) * (_WallX_Start - _RayX_Start)) / _Den;
             if (_T > 0F && _T < 1F && _U > 0F)
             {
-                return new Vector2(_X1 + _T * (_X2 - _X1), _Y1 + _T * (_Y2 - _Y1));
+                return new Vector2(_WallX_Start + _T * (_WallX_End - _WallX_Start), _WallY_Start + _T * (_WallY_End - _WallY_Start));
             }
             else
             {
@@ -43,19 +46,12 @@ namespace XamRayTracing
             }
         }
 
-        internal void SetDirection(double heading)
+        internal void SetHeading(double heading_Deg)
         {
-            double radAngle = heading * Math.PI/ 180; // Convert to radians
-            double _CosAngle = Math.Cos(radAngle);
-            double _SinAngle = Math.Sin(radAngle);
-            double _RotatedX = Location.X * _CosAngle - Location.Y * _SinAngle;
-            double _RotatedY = Location.X * _SinAngle + Location.Y * _CosAngle;
-
-            Direction = new Vector2((float)_RotatedX, (float)_RotatedY);
+            Direction = VecUtils.RotateByDegrees(Location, __InitialHeading + heading_Deg);
         }
 
         public Vector2 Direction { get; set; }
-        public int Index { get; }
         public Vector2 Location { get; set; }
     }
 }
